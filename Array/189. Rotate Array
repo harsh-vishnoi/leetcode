@@ -1,0 +1,16 @@
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        vector <int> temp = nums;
+        int n = nums.size();
+        for(int i=0; i<nums.size(); i++){
+            nums[(i + k) % n] = temp[(i) % n];
+        }
+    }
+};
+
+
+/*
+Time Complexity - O(N)
+Space Complexity - O(N)
+*/

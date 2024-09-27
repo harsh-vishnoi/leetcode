@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int hammingWeight(int n) {
+        int countOnes = 0;
+        while(n){
+            if(n & 1)
+                countOnes++;
+            n >>= 1;
+        }
+        return countOnes;
+    }
+};
+
+
+/*
+Time Complexity - O(32)
+Space Complexity - O(1)
+*/
