@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int smallestRangeII(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end()); O(NlogN)
+        int score = nums[nums.size() - 1] - nums[0];
+
+        for(int index = 1; index < nums.size(); index++){ O(N)
+            int high = max(nums[nums.size() - 1] - k, nums[index - 1] + k);
+            int low = min(nums[0] + k, nums[index] - k);
+            score = min(score, high - low);
+        }
+
+        return score;
+    }
+};
+
+
+/*
+Time Complexity - O(NlogN)
+Space Complexity - O(N)
+*/

@@ -1,0 +1,34 @@
+class CustomStack {
+public:
+    int maxElements = 0;
+    int curIndex = 0;
+    vector <int> stk;
+    CustomStack(int maxSize) {
+        stk.resize(maxSize, -1);
+        maxElements = maxSize;
+    }
+    
+    void push(int x) {
+        if(curIndex < maxElements){
+            stk[curIndex++] = x;
+        }
+    }
+    
+    int pop() {
+        if(curIndex == 0)
+            return -1;
+        
+        int val = stk[curIndex - 1];
+        stk[curIndex - 1] = -1;
+        curIndex--;
+        return val;
+    }
+    
+    void increment(int k, int val) {
+        for(int i=0; i<k && i<maxElements; i++){
+            if(stk[i] == -1)
+                return;
+            stk[i] += val;
+        }
+    }
+};
