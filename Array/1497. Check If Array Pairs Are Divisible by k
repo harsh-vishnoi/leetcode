@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool canArrange(vector<int>& arr, int k) {
+
+        vector <long long> freqCount(k + 1, 0);
+
+        long long totalElements = arr.size();
+        for(int index=0; index<totalElements; index++){
+            arr[index] = (arr[index]%k + k)%k;
+            freqCount[arr[index]]++;
+        }
+
+        for(long long key=1; key<k; key++){
+            if(freqCount[key] != freqCount[k - key])
+                return false;
+        }
+
+        if(freqCount[0] % 2 == 1)
+            return false;
+
+        return true;
+    }
+};
+
+
+/*
+Time Complexity - O(N)
+Space Complexity - O(N)
+*/
