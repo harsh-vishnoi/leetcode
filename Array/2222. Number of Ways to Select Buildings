@@ -1,0 +1,29 @@
+class Solution {
+public:
+    long long numberOfWays(string s) {
+        long long ways = 0;
+
+        long long count0s = 0, count1s = 0;
+        long long count01s = 0, count10s = 0;
+
+        for(char c: s){
+            if(c == '0'){
+                ways += count01s;
+                count0s++;
+                count10s += count1s;
+            }else{
+                ways += count10s;
+                count1s++;
+                count01s += count0s;
+            }
+        }
+
+        return ways;
+    }
+};
+
+
+/*
+Time Complexity - O(N)
+Space Complexity - O(1)
+*/
