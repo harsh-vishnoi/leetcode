@@ -1,0 +1,65 @@
+class Solution {
+public:
+    vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
+        vector <vector <int>> result;
+
+        vector <pair<int, int>> heightList;
+        for(int index=0; index<buildings.size(); index++){
+            heightList.push_back(make_pair(buildings[index][0], buildings[index][2]));
+            heightList.push_back(make_pair(buildings[index][1], -1 * buildings[index][2]));
+        }
+        sort(heightList.begin(), heightList.end(), [&](pair <int, int> a, pair <int, int> b){
+            if(a.first == b.first)
+                return a.second > b.second;
+            return a.first < b.first;
+        });
+
+
+        /*
+        To understand how vector actually looks like.
+        for(auto p : heightList){
+            cout << p.first << " " << p.second << " || ";
+        }cout << endl;
+        */
+
+        map <int, int> pq;
+
+        int prev = 0, curr = 0;
+        for(int index=0; index<heightList.size(); index++){
+            int point = heightList[index].first;
+            int curHeight = heightList[index].second;
+            curr = curHeight;
+            
+            if(curHeight > 0){
+                pq[curHeight]++;
+            }else{
+                curHeight *= -1;
+                pq[curHeight]--;
+                if(pq[curHeight] == 0)
+                    pq.erase(curHeight);
+            }
+            
+            if(!pq.empty()){
+                auto it = pq.rbegin();
+                curr = it->first;
+            }
+
+            if(prev != curr){
+                if(pq.size() == 0){
+                    result.push_back({point, 0});
+                }else{
+                    result.push_back({point,curr});
+                }
+            }
+            prev = curr;
+        }
+
+        return result;
+    }
+};
+
+
+/*
+Time Complexity O(NlogN)
+Space Complexity O(N)
+*/
