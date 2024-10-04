@@ -1,0 +1,23 @@
+class Solution {
+public:
+    long long dividePlayers(vector<int>& skill) {
+        long long result = 0, currSum = 0;
+
+        sort(skill.begin(), skill.end());
+
+        currSum = skill[0] + skill[skill.size() - 1];
+        for(int left = 1, right = skill.size() - 2; left < right && right < skill.size(); left++, right--){
+            if(skill[left] + skill[right] != currSum)
+                return -1;
+            result += (skill[left] * skill[right]);
+        }
+        result += (skill[0] * skill[skill.size() - 1]);
+
+        return result;
+    }
+};
+
+/*
+Time Complexity O(NlogN)
+Space Complexity  O(1)
+*/

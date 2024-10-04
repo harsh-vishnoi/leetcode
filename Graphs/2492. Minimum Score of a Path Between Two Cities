@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int minScore(int n, vector<vector<int>>& roads) {
+        int result = INT_MAX;
+
+        vector <vector <pair<int, int>>> graph(n);
+        for(int index=0; index<roads.size(); index++){
+            int src = roads[index][0] - 1;
+            int dest = roads[index][1] - 1;
+            int dist = roads[index][2];
+            graph[src].push_back(make_pair(dest, dist));
+            graph[dest].push_back(make_pair(src, dist));
+        }
+        
+        queue <pair<int, int>> q;
+        q.push(make_pair(0, INT_MAX));
+        
+        vector <bool> visited(n, false);
+
+        while(!q.empty()){
+            int src = q.front().first;
+            int distance = q.front().second;
+            q.pop();
+
+            result = min(result, distance);
+
+            for(int index=0; index<graph[src].size() && !visited[src]; index++){
+                int newSrc = graph[src][index].first;
+                int newDistance = graph[src][index].second;
+                q.push(make_pair(newSrc, newDistance));
+            }
+            visited[src] = true;
+        }
+
+        return result;
+    }
+};
+
+
+/*
+BFS
+
+Time Complexity O(V + E)
+Space Complexity O(V + E) 
+*/
