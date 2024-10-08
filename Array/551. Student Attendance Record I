@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool checkRecord(string s) {
+        int countAs = 0;
+        int consecutiveLs = 0;
+
+        for (char ch : s) {
+            if (ch == 'A') {
+                countAs++;
+                if (countAs >= 2) return false;
+            }
+
+            if (ch == 'L') {
+                consecutiveLs++;
+                if (consecutiveLs == 3) return false;
+            } else {
+                consecutiveLs = 0;
+            }
+        }
+
+        return true;
+    }
+};
+
+
+/*
+Time Complexity O(N)
+Space Complexity O(1) 
+*/

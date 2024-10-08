@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<vector<int>> dirs = {{-1,1}, {0,1}, {1,1}, {1, 0}, {1,-1}, {0,-1}, {-1,-1}, {-1,0}};
+    
+    int findMax(vector<vector<int>>& grid, int xCor, int yCor) {
+        int result = 0;
+        for (int idx = 0; idx < dirs.size(); idx++) {
+            int newX = xCor + dirs[idx][0];
+            int newY = yCor + dirs[idx][1];
+            result = max(result, grid[newX][newY]);
+        }
+        return result;
+    }
+
+    vector<vector<int>> largestLocal(vector<vector<int>>& grid) {
+        int N = grid.size();
+        vector<vector<int>> result(N - 2, vector<int>(N - 2, 0));
+
+        for (int row = 1; row < N - 1; row++) {
+            for (int col = 1; col < N - 1; col++) {
+                int curMax = grid[row][col];
+                curMax = max(curMax, findMax(grid, row, col));
+                result[row - 1][col - 1] = curMax;
+            }
+        }
+
+        return result;
+    }
+};
+
+
+/*
+Time Complexity O(N * N)
+Space Complexity O(N * N)
+*/
