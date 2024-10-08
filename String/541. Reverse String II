@@ -1,0 +1,47 @@
+class Solution {
+public:
+    void solve(string &s, int startIndex, int k){
+        if(startIndex >= s.length())
+            return;
+
+        if(startIndex + k <= s.length()){
+            reverse(s.begin() + startIndex, s.begin() + startIndex + k);
+        }else{
+            reverse(s.begin() + startIndex, s.end());
+            return;   
+        }
+        startIndex +=  2*k;
+        solve(s, startIndex, k);
+    }
+
+    string reverseStr(string s, int k) {
+        solve(s, 0, k);
+        return s;
+    }
+};
+
+/*
+Time COmplexity O(N)
+*/
+
+class Solution {
+public:
+    string reverseStr(string s, int k) {
+        int n = s.length();
+        
+        for(int i = 0; i < n; i += 2 * k) {
+            if(i + k <= n) {
+                reverse(s.begin() + i, s.begin() + i + k);
+            } else {
+                reverse(s.begin() + i, s.end());
+            }
+        }
+        
+        return s;
+    }
+};
+
+/*
+This Solution is more efficient.
+Time COmplexity O(N)
+*/
