@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool cycle(vector <int> &visited, vector <int> &recVisited, vector <vector <int>> & graph, int src){
+        if(!visited[src]){
+            visited[src] = true;
+            recVisited[src] = true;
+            for(int index=0; index<graph[src].size(); index++){
+                int newSrc = graph[src][index];
+                if(!visited[newSrc] && cycle(visited, recVisited, graph, newSrc))
+                    return true;   
+                if(recVisited[newSrc])
+                    return true; 
+            }
+        }
+        
+        recVisited[src] = false;
+        return false;
+    }
+
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector <vector <int>> graph(numCourses);
+        for(auto prerequisite : prerequisites){
+            int dest = prerequisite[0];
+            int src = prerequisite[1];
+            graph[src].push_back(dest);
+        }
+
+        vector <int> visited(numCourses, false);
+        vector <int> recVisited(numCourses, false);
+        for(int src = 0; src < numCourses; src++){
+            if(!visited[src]){
+                if(cycle(visited, recVisited, graph, src))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+};
+
+/*
+Time Complexity O(V + E)
+Space Complexity O(V + E)
+*/
