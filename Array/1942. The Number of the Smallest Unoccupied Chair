@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int smallestChair(vector<vector<int>>& times, int targetFriend) {
+        vector <vector <int>> timeWithIndex;
+        for(int i=0; i<times.size(); i++){
+            timeWithIndex.push_back({times[i][0], times[i][1], i});
+        }
+        sort(timeWithIndex.begin(), timeWithIndex.end());
+
+        priority_queue <int, vector <int>, greater <int>> availableChairs;
+        for(int i=0; i<times.size(); i++){
+            availableChairs.push(i);
+        }
+
+        priority_queue <pair <int, int>, vector <pair <int, int>>, greater <pair <int, int>>> occupiedChairs;
+        for(int i=0; i<timeWithIndex.size(); i++){
+            int arrival = timeWithIndex[i][0];
+            int departure = timeWithIndex[i][1];
+            int id = timeWithIndex[i][2];
+
+            while(!occupiedChairs.empty() && occupiedChairs.top().first <= arrival){
+                availableChairs.push(occupiedChairs.top().second);
+                occupiedChairs.pop();
+            }
+
+            if(id == targetFriend)
+                return availableChairs.top();
+
+            occupiedChairs.push(make_pair(departure, availableChairs.top()));
+            availableChairs.pop();
+        }
+
+        return -1;
+    }
+};
+
+/*
+Time Complexity O(NlogN)
+Space Complexity O(N)
+*/
