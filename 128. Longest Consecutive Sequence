@@ -1,0 +1,58 @@
+class Solution {
+public:
+    unordered_map <int, int> parent;
+    unordered_map <int, int> cost;
+
+    int findParent(int src){
+        if(parent[src] == src)
+            return src;
+        return findParent(parent[src]);
+    }
+
+    void unionFind(int src, int destination){
+        parent[destination] = src;
+    }
+
+    int longestConsecutive(vector<int>& nums) {
+        if(nums.size() == 0)
+            return 0;
+
+        for(int num : nums){
+            parent[num] = num;
+            cost[num] = 1;
+        }
+
+        unordered_map <int, bool> ump;
+        int maxCost = 1;
+        for(int num: nums){
+            ump[num] = true;
+            if(ump.find(num + 1) != ump.end()){
+                int parent_src = findParent(num);
+                int parent_dest = findParent(num + 1);
+
+                if(parent_src != parent_dest){
+                    unionFind(parent_src, parent_dest);
+                    cost[parent_src] += cost[parent_dest];
+                    maxCost = max(maxCost, cost[parent_src]);
+                }
+            }
+            if(ump.find(num - 1) != ump.end()){
+                int parent_src = findParent(num);
+                int parent_dest = findParent(num - 1);
+                
+                if(parent_src != parent_dest){
+                    unionFind(parent_src, parent_dest);
+                    cost[parent_src] += cost[parent_dest];
+                    maxCost = max(maxCost, cost[parent_src]);
+                }
+            }
+        }
+
+        return maxCost;
+    }
+};
+
+/*
+Time Complexity O(N)
+Space Complexity O(N)
+*/
