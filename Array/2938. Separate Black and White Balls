@@ -1,0 +1,21 @@
+class Solution {
+public:
+    long long minimumSteps(string s) {
+        long long result = 0, countOnes = 0;
+
+        for(int i=0; i<s.length(); i++){
+            if(s[i] == '1'){
+                countOnes++;
+            }else{
+                result += countOnes;
+            }
+        }
+
+        return result;
+    }
+};
+
+/*
+Time Complexity O(N)
+Space Complexity O(1)
+*/
