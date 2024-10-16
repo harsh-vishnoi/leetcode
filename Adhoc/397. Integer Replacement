@@ -1,0 +1,24 @@
+class Solution {
+public:
+    unordered_map <long, long> ump;
+    int solve(long n){
+        if(n == 1)
+            return 0;
+
+        if(ump.find(n) != ump.end())
+            return ump[n];
+        
+        if(n % 2 == 0)
+            return ump[n] = 1 + integerReplacement(n/2);
+        return ump[n] = 1 + min(integerReplacement(n - 1), integerReplacement(n + 1));
+    }
+
+    int integerReplacement(int n) {
+        return solve(n);
+    }
+};
+
+/*
+Time Complexity O(NlogN)
+Space Complexity O(NlogN)
+*/

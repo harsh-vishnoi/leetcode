@@ -1,0 +1,56 @@
+class Solution {
+public:
+    int count1s(int value){
+        int ones = 0;
+        while(value){
+            int digit = value & 1;
+            if(digit)
+                ones++;
+            value = value >> 1;
+        }
+        return ones;
+    }
+
+    int totalHammingDistance(vector<int>& nums) {
+        int result = 0;
+        for(int i=0; i<nums.size(); i++){
+            for(int j=i+1; j<nums.size(); j++){
+                int curVal = nums[i] ^ nums[j];
+                result += count1s(curVal);
+            }
+        }
+        return result;
+    }
+};
+
+/*
+Time Complexity O(N^2)
+Space Complexity O(1)
+*/
+
+/* Optimised Solution */
+
+class Solution {
+public:
+    int totalHammingDistance(vector<int>& nums) {
+        int result = 0;
+        int n = nums.size();
+
+        for(int bit=0; bit<32; bit++){
+            int onesCount = 0;
+            for(int i=0; i<n; i++){
+                if(nums[i] & (1 << bit)){
+                    onesCount++;
+                }
+            }
+            result += onesCount * (n - onesCount);
+        }
+
+        return result;
+    }
+};
+
+/*
+Time Complexity O(n)
+Space Complexity O(1)
+*/
