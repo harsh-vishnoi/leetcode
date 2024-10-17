@@ -1,0 +1,18 @@
+func getSneakyNumbers(nums []int) []int {
+    mp := make(map[int]bool)
+    result := []int{}
+    for i:=0; i<len(nums); i++ {
+        if _, exists := mp[nums[i]]; exists {
+            result = append(result, nums[i])
+        }else{
+            mp[nums[i]] = true
+        }
+    }
+
+    return result
+}
+
+/*
+Time Complexity O(N)
+Space Complexity O(N)
+*/

@@ -1,0 +1,16 @@
+func finalValueAfterOperations(operations []string) int {
+    result := 0
+    for _, val := range operations {
+        if val == "--X" || val == "X--" {
+            result--
+        }else{
+            result++
+        }
+    }
+    return result
+}
+
+/*
+Time Complexity O(N)
+Space Complexity O(1)
+*/

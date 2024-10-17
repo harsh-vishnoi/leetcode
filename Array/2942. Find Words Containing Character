@@ -1,0 +1,25 @@
+func isAvailable(word string, x byte) bool {
+    for i := 0; i < len(word); i++ {
+        if word[i] == x {
+            return true
+        }
+    }
+    return false
+}
+
+func findWordsContaining(words []string, x byte) []int {
+    result := []int{}
+
+    for index, word := range words {
+        if isAvailable(word, x) {
+            result = append(result, index)
+        }
+    }
+
+    return result
+}
+
+/*
+Time Complexity O(M * N)
+Space Complexity O(M)
+*/
