@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int longestSquareStreak(vector<int>& nums) {
+        map <long long, bool> mp;
+        for (long long index=0; index<nums.size(); index++) {
+            mp[nums[index]] = true;
+        }
+
+        long long max_len = 1;
+        for(auto it=mp.begin(); it!=mp.end(); it++){
+            long long val = it->first;
+            bool valid = true;
+            long long curr_len = 1;
+            while(valid){
+                long long sq = val * val;
+                if(mp.find(sq) != mp.end()){
+                    curr_len += 1;
+                    max_len = max(max_len, curr_len);
+                    val = sq;
+                } else{
+                    valid = false;
+                }
+            }
+        }
+        return (max_len == 1) ? -1 : max_len;
+    }
+};
+
+/*
+Time Complexity O(NlogN)
+Space Complexity O(N)
+*/
