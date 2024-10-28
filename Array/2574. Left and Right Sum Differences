@@ -1,0 +1,33 @@
+func abs(x int) int{
+    if x < 0 {
+        return -x
+    }
+    return x
+}
+
+func leftRightDifference(nums []int) []int {
+    result := make([]int, len(nums))
+
+    left := make([]int, len(nums))
+    right := make([]int, len(nums))
+
+    for i:=1; i<len(nums); i++ {
+        left[i] += left[i-1] + nums[i-1]
+    }
+
+    
+    for i:=len(nums) - 2; i>=0; i-- {
+        right[i] += right[i+1] + nums[i+1]
+    }
+
+    for i:=0; i<len(nums); i++ {
+        result[i] = abs(left[i] - right[i])
+    }
+
+    return result
+}
+
+/*
+Time Complexity O(N)
+Space Complexity O(N)
+*/
