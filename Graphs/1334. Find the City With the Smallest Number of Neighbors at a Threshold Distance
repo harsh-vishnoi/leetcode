@@ -1,0 +1,51 @@
+class Solution {
+public:
+#define ll long long
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        vector<vector<ll>> spm(n, vector<ll>(n, INT_MAX));
+
+        for (int i = 0; i < n; i++) {
+            spm[i][i] = 0;
+        }
+
+        for (const auto& edge : edges) {
+            int src = edge[0], dest = edge[1], cost = edge[2];
+            spm[src][dest] = cost;
+            spm[dest][src] = cost;
+        }
+
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (spm[i][k] != INT_MAX && spm[k][j] != INT_MAX) {
+                        spm[i][j] = min(spm[i][j], spm[i][k] + spm[k][j]);
+                    }
+                }
+            }
+        }
+
+        int minReachable = INT_MAX, ans = -1;
+
+        for (int i = 0; i < n; i++) {
+            int reachableCities = 0;
+            for (int j = 0; j < n; j++) {
+                if (i != j && spm[i][j] <= distanceThreshold) {
+                    reachableCities++;
+                }
+            }
+
+            if (reachableCities <= minReachable) {
+                minReachable = reachableCities;
+                ans = i;
+            }
+        }
+
+        return ans;
+    }
+};
+
+
+/*
+Time Complexity : O(n3)
+Space Complexity : O(n2)
+*/

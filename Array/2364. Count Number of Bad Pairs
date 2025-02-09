@@ -1,0 +1,28 @@
+class Solution {
+public:
+    long long countBadPairs(vector<int>& nums) {
+        long long N = nums.size();
+        long long count = 0;
+        unordered_map <long long, long long> ump;
+        for(long long i=0; i<N; i++){
+            long long val = nums[i] - i;
+            nums[i] = val;
+        }
+        for(long long i=0; i<N; i++){
+            if(i != 0){
+                int cnt = 0;
+                if(ump.find(nums[i]) != ump.end()){
+                    cnt = ump[nums[i]];
+                }
+                count += ( i - cnt);
+            }
+            ump[nums[i]]++;
+        }
+        return count;
+    }
+};
+
+/*
+Time Complexity : O(N)
+Space Complexity : O(N)
+*/
