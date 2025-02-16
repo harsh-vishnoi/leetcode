@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maximumPopulation(vector<vector<int>>& logs) {
+        map <int, int> population;
+        for(int index=0; index<logs.size(); index++){
+            int startYear = logs[index][0];
+            int endYear = logs[index][1];
+            population[startYear]++;
+            population[endYear]--;
+        }
+
+        int countPopulation = 0, maxPopulation = 0, year = -1;
+        for(auto it=population.begin(); it!=population.end(); it++){
+            countPopulation += it->second;
+            if(countPopulation > maxPopulation){
+                maxPopulation = countPopulation;
+                year = it->first;
+            }
+        }
+        return year;
+    }
+};
+
+/*
+Time Complexity : O(NlogN)
+Space Complexity : O(N)
+*/
